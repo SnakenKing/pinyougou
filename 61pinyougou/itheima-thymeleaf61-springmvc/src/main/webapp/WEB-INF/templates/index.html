@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>thymeleaf的使用首页</title>
+</head>
+
+<body>
+    <h1 th:text="${hello}"></h1><br>
+
+    id的值<span th:text="${user.id}"></span>
+    name的值<span th:text="${user.name}"></span>
+    name的值111<span th:text="${user.name}"></span><br>
+
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>index</td>
+        </tr>
+
+        <tr th:each="user,myStat:${list}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.name}">1</td>
+            <td th:text="${myStat.index}">1</td>
+        </tr>
+    </table>
+
+
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>index</td>
+            <td>count</td>
+            <td>size</td>
+            <td>current</td>
+            <td>even/odd</td>
+            <td>first</td>
+            <td>last</td>
+        </tr>
+        <!-- user,iterStat 也可以不用写 会自动创建一个userStat-->
+        <tr th:each="user :${list}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${userStat.index}"></td>
+            <td th:text="${userStat.count}"></td>
+            <td th:text="${userStat.size}"></td>
+            <td th:text="${userStat.current}"></td>
+            <td th:text="${userStat.odd}"></td>
+            <td th:text="${userStat.first}"></td>
+            <td th:text="${userStat.last}"></td>
+        </tr>
+    </table>
+
+    <a  th:href="@{${user.id}}">aaaa</a>
+    <a  th:href="@{/index/test(orderId=${user.id},a=${user.id})}">abc</a>
+    <a  th:href="@{'/index/test?id='+${user.id} }">abc</a>
+
+<br>
+
+date:<span th:text="${#dates.format(date,'yyyy-MM-dd')}"></span>
+
+
+
+
+</body>
+<!--内联表达式-->
+<script th:inline="javascript">
+
+    var myname =[[${user.id}]];
+    console.log(myname);
+</script>
+
+</html>

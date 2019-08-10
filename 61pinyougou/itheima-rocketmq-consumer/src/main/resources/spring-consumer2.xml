@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置:消费者对象-->
+    <bean class="org.apache.rocketmq.client.consumer.DefaultMQPushConsumer" id="consumer" init-method="start"
+          destroy-method="shutdown">
+        <!--1.消费者组组名-->
+        <property name="consumerGroup" value="group_consumer_spring_1"></property>
+        <!--2.nameserver-->
+        <property name="namesrvAddr" value="127.0.0.1:9876"></property>
+        <!--3.订阅主题-->
+        <property name="subscription">
+            <map>
+                <!--key:指定的主题的名称 value指定的Tag的名称 如果是* 表示所有的TAG-->
+                <entry key="SPRING_TOPIC" value="*"></entry>
+            </map>
+        </property>
+        <!--4.消费者模式的设置-->
+        <property name="messageModel" value="BROADCASTING"></property>
+
+    <!--5.设置监听器-->
+        <property name="messageListener" ref="messageListener2"></property>
+
+
+    </bean>
+
+
+    <!--6.创建监听器-->
+    <bean class="com.pinyougou.listener.MyMessageListener2" id="messageListener2"></bean>
+
+</beans>

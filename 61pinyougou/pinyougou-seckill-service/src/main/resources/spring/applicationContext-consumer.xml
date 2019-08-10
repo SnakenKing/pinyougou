@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置消费者对象-->
+
+    <bean class="org.apache.rocketmq.client.consumer.DefaultMQPushConsumer" id="consumer" init-method="start"
+          destroy-method="shutdown">
+        <!--1.消费者组-->
+        <property name="consumerGroup" value="consmer_seckill_group"></property>
+        <!--2.nameserv-->
+        <property name="namesrvAddr" value="127.0.0.1:9876"></property>
+        <!--3.设置消费模式-->
+        <property name="messageModel" value="CLUSTERING"></property>
+        <!--4.订阅主题-->
+        <property name="subscription">
+            <map>
+                <!--key 主题名  value tag名称 * 表示所有的tag-->
+                <entry key="TOPIC_SECKILL" value="*"></entry>
+            </map>
+        </property>
+    <!--5.设置监听器-->
+        <property name="messageListener" ref="messageListener"></property>
+
+
+    </bean>
+
+    <!--创建一个监听器-->
+    <bean class="com.pinyougou.seckill.listener.PageMessageListener" id="messageListener"></bean>
+
+
+</beans>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="itheima-sms:war">
+    <output-path>$PROJECT_DIR$/itheima-sms/target</output-path>
+    <root id="archive" name="itheima-sms.war">
+      <element id="artifact" artifact-name="itheima-sms:war exploded" />
+    </root>
+  </artifact>
+</component>

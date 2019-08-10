@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!--使用spring的线程池来实现线程的管理-->
+
+
+    <!--1.线程池类的配置-->
+
+    <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" id="taskExecutor">
+        <!--初始线程数量-->
+        <property name="corePoolSize" value="10"></property>
+        <!--最大线程数量-->
+        <property name="maxPoolSize" value="100"></property>
+        <!--队列的最大容量-->
+        <property name="queueCapacity" value="200"></property>
+        <!--线程的最大空闲时间 秒-->
+        <property name="keepAliveSeconds" value="300"></property>
+
+        <!--设置拒绝策略-->
+        <property name="rejectedExecutionHandler">
+            <!--该策略指定如果线程不足，由创建线程池的系统来进行处理-->
+            <bean class="java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy"></bean>
+        </property>
+    </bean>
+
+    <!--2.任务驱动注解-->
+    <task:annotation-driven executor="taskExecutor"></task:annotation-driven>
+
+
+
+    <bean class="com.pinyougou.seckill.thread.CreateOrderThread"></bean>
+
+
+
+
+    <!--3.使用注解实现多线程下单-->
+
+
+</beans>
